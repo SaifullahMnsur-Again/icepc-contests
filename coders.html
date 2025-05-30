@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICE Coders (current)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-bold text-indigo-700 dark:text-indigo-300">ICE Coders (current)</h1>
+      <div class="flex items-center gap-4">
+        <input id="filterInput" type="text" placeholder="Filter by name or ID..." class="px-3 py-1 rounded-md border border-gray-300 dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <button onclick="toggleDarkMode()" class="px-3 py-1 rounded-md bg-indigo-600 text-white dark:bg-indigo-400 dark:text-black hover:bg-indigo-700 dark:hover:bg-indigo-300">Toggle Theme</button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 shadow rounded-2xl">
+      <table class="min-w-full text-sm text-left border-collapse">
+        <thead class="bg-indigo-100 dark:bg-gray-700 dark:text-white">
+          <tr>
+            <th class="px-4 py-3 border-b">#</th>
+            <th class="px-4 py-3 border-b">Student ID</th>
+            <th class="px-4 py-3 border-b">Name</th>
+            <th class="px-4 py-3 border-b">Codeforces</th>
+            <th class="px-4 py-3 border-b">Vjudge</th>
+            <th class="px-4 py-3 border-b">Atcoder</th>
+            <th class="px-4 py-3 border-b">Codechef</th>
+          </tr>
+        </thead>
+        <tbody id="codersTableBody" class="divide-y divide-gray-200 dark:divide-gray-700"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_rvXyZpvU4zsqMZ10-px2NULkBw5rfCTGUD2HHVYDAjUdZuDuxbgjtkjGtIWHD-lPkvHzLjlnC9Tq/pub?gid=0&single=true&output=csv";
+    function handleLink(handle, platform) {
+      if (!handle) return "";
+      const urls = {
+        Codeforces: `https://codeforces.com/profile/${handle}`,
+        Vjudge: `https://vjudge.net/user/${handle}`,
+        Atcoder: `https://atcoder.jp/users/${handle}`,
+        Codechef: `https://www.codechef.com/users/${handle}`
+      };
+      return `<a href="${urls[platform]}" target="_blank" class="text-blue-600 dark:text-blue-300 hover:underline">${handle}</a>`;
+    }
+
+    function customSortKey(id) {
+      const digits = id.replace(/\D/g, '');
+      if (digits.length < 4) return 9999;
+      return parseInt(digits.slice(0, 2) + digits.slice(-2), 10);
+    }
+
+    let allCoders = [];
+
+    async function fetchCoders() {
+      try {
+        const res = await fetch(SHEET_URL);
+        const csv = await res.text();
+        const lines = csv.trim().split("\n");
+        const headers = lines[0].split(",").map(h => h.trim());
+        const data = lines.slice(1).map(line => line.split(","));
+
+        allCoders = data.map(row => {
+          const obj = Object.fromEntries(headers.map((h, i) => [h, row[i]?.trim() || ""]));
+          obj.sortKey = customSortKey(obj["Student ID"]);
+          return obj;
+        });
+
+        allCoders.sort((a, b) => a.sortKey - b.sortKey);
+        renderTable(allCoders);
+      } catch (error) {
+        document.getElementById("codersTableBody").innerHTML = `
+          <tr><td colspan="7" class="text-center text-red-500 py-4">Failed to load coders list.</td></tr>`;
+        console.error(error);
+      }
+    }
+
+    function renderTable(coders) {
+      const tableBody = document.getElementById("codersTableBody");
+      tableBody.innerHTML = "";
+      coders.forEach((coder, index) => {
+        tableBody.innerHTML += `
+          <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+            <td class="px-4 py-2 border-b">${index + 1}</td>
+            <td class="px-4 py-2 border-b">${coder["Student ID"]}</td>
+            <td class="px-4 py-2 border-b">${coder["Name"]}</td>
+            <td class="px-4 py-2 border-b">${handleLink(coder["Codeforces"], "Codeforces")}</td>
+            <td class="px-4 py-2 border-b">${handleLink(coder["Vjudge"], "Vjudge")}</td>
+            <td class="px-4 py-2 border-b">${handleLink(coder["Atcoder"], "Atcoder")}</td>
+            <td class="px-4 py-2 border-b">${handleLink(coder["Codechef"], "Codechef")}</td>
+          </tr>`;
+      });
+    }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle("dark");
+    }
+
+    document.getElementById("filterInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = allCoders.filter(coder =>
+        coder["Name"].toLowerCase().includes(query) ||
+        coder["Student ID"].toLowerCase().includes(query)
+      );
+      renderTable(filtered);
+    });
+
+    fetchCoders();
+  </script>
+</body>
+</html>
