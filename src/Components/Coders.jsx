@@ -158,6 +158,22 @@ function Coders() {
           </table>
         )}
       </motion.div>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="mt-6 text-gray-700 dark:text-gray-300 text-center"
+      >
+        Not on the list?{' '}
+        <a
+          href="https://forms.gle/iB1LpvjzPeTrxk7E9" // Replace with your actual Google Form link
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
+        >
+          Join the ICE Programming Club!
+        </a>
+      </motion.p>
     </motion.section>
   );
 }
