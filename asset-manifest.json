@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/icepc-contests/static/css/main.0a9230dc.css",
-    "main.js": "/icepc-contests/static/js/main.3f5a0750.js",
+    "main.css": "/icepc-contests/static/css/main.7a848a96.css",
+    "main.js": "/icepc-contests/static/js/main.db6716e0.js",
     "index.html": "/icepc-contests/index.html",
-    "main.0a9230dc.css.map": "/icepc-contests/static/css/main.0a9230dc.css.map",
-    "main.3f5a0750.js.map": "/icepc-contests/static/js/main.3f5a0750.js.map"
+    "main.7a848a96.css.map": "/icepc-contests/static/css/main.7a848a96.css.map",
+    "main.db6716e0.js.map": "/icepc-contests/static/js/main.db6716e0.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a9230dc.css",
-    "static/js/main.3f5a0750.js"
+    "static/css/main.7a848a96.css",
+    "static/js/main.db6716e0.js"
   ]
 }
