@@ -100,12 +100,12 @@ The website is hosted on GitHub Pages at `https://saifullahmnsur-again.github.io
    - Navigate to **Settings** > **Pages**.
    - Set **Source** to `gh-pages` branch, `/ (root)` folder.
    - Save and wait 1–5 minutes.
-   - Access the site at `https://saifullah123.github.io/icepc-contests`.
+   - Access the site at `https://saifullahmnsur-again.github.io/icepc-contests`.
 
 ## Data Sources
 
-- **Coders**: [Google Sheet CSV](https://docs.google.com/spreadsheets/d/e/2PACX-1vS_rvXyZpvU4zsqMZ10-px2NULkBw5rfCTGUD2HHVYDAjUdZuDuxbgjtkjGtIWHD-lPkvHzLjlnC9Tq/pub?gid=0&single=true&output=csv)
-- **Contests**: [Google Sheet CSV](https://docs.google.com/spreadsheets/d/e/2PACX-1vSXSB-zO1tuSWPCZEgENWdwJJezIyqmlksdwAulBsawNFVekKYlGn6dS0imxMq5qRNjHtB8MUWF0QLX/pub?gid=1861808501&single=true&output=csv)
+- **Coders**: [Google Sheet CSV](#)
+- **Contests**: [Google Sheet CSV](#)
 - Ensure sheets are published as CSVs (`File > Share > Publish to web > CSV`).
 
 ## Troubleshooting
