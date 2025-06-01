@@ -7,3 +7,5 @@ coverage
 build
 .DS_Store
 *.log
+*.txt
+*.py

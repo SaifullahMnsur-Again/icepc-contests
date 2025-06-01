@@ -10,18 +10,9 @@
     <link rel="apple-touch-icon" href="/icepc-contests/apple-touch-icon.png" />
     <title>ICE Programming Club</title>
     <script>
-      // Handle root redirect
+      // Redirect root to /icepc-contests/
       if (window.location.pathname === '/' && !window.location.pathname.startsWith('/icepc-contests')) {
         window.location.replace('/icepc-contests/');
-      }
-      // Handle redirected paths from 404.html
-      const redirectPath = sessionStorage.getItem('redirectPath');
-      if (redirectPath && window.location.pathname === '/icepc-contests/') {
-        sessionStorage.removeItem('redirectPath');
-        const newPath = redirectPath.replace(/^\/icepc-contests/, '');
-        if (newPath && newPath !== '/') {
-          window.history.replaceState({}, '', '/icepc-contests' + newPath);
-        }
       }
     </script>
   </head>
