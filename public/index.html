@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#4f46e5" />
     <meta name="description" content="ICE Programming Club - Competitive programming platform for the Department of Information and Communication Engineering, University of Rajshahi" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/icepc-contests/manifest.json" />
+    <link rel="icon" href="/icepc-contests/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icepc-contests/apple-touch-icon.png" />
     <title>ICE Programming Club</title>
     <script>
+      // Handle root redirect
       if (window.location.pathname === '/' && !window.location.pathname.startsWith('/icepc-contests')) {
         window.location.replace('/icepc-contests/');
+      }
+      // Handle redirected paths from 404.html
+      const redirectPath = sessionStorage.getItem('redirectPath');
+      if (redirectPath && window.location.pathname === '/icepc-contests/') {
+        sessionStorage.removeItem('redirectPath');
+        const newPath = redirectPath.replace(/^\/icepc-contests/, '');
+        if (newPath && newPath !== '/') {
+          window.history.replaceState({}, '', '/icepc-contests' + newPath);
+        }
       }
     </script>
   </head>
